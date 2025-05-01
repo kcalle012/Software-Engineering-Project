@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/Software-Engineering-Project/static/css/main.74601abd.css",
+    "main.js": "/Software-Engineering-Project/static/js/main.1e44b0db.js",
+    "static/js/488.431a4c48.chunk.js": "/Software-Engineering-Project/static/js/488.431a4c48.chunk.js",
+    "static/media/login-image.png": "/Software-Engineering-Project/static/media/login-image.3872e6b3a64f04a84e88.png",
+    "static/media/onepiececlub.png": "/Software-Engineering-Project/static/media/onepiececlub.4e75846799d60545672f.png",
+    "static/media/BobaTime.png": "/Software-Engineering-Project/static/media/BobaTime.2b841d11a5db022f1f0f.png",
+    "static/media/HostClub.webp": "/Software-Engineering-Project/static/media/HostClub.d3e0d8ce1fc599445d30.webp",
+    "static/media/eye-slash-solid.png": "/Software-Engineering-Project/static/media/eye-slash-solid.addcc50c825621f15755.png",
+    "static/media/Egoist.webp": "/Software-Engineering-Project/static/media/Egoist.22e046bd23a3bd1d8f19.webp",
+    "static/media/EvanEvent.webp": "/Software-Engineering-Project/static/media/EvanEvent.6f98746b65b3a9cec426.webp",
+    "static/media/MikuConcert2.png": "/Software-Engineering-Project/static/media/MikuConcert2.9ea67ca55cc28c819e42.png",
+    "static/media/eye-solid.png": "/Software-Engineering-Project/static/media/eye-solid.60babb19f940a86393bf.png",
+    "static/media/sarahhh.webp": "/Software-Engineering-Project/static/media/sarahhh.598b98ce3a08104eab69.webp",
+    "static/media/AnyaTea.webp": "/Software-Engineering-Project/static/media/AnyaTea.be792e06b4f8108c50df.webp",
+    "static/media/BadMath.webp": "/Software-Engineering-Project/static/media/BadMath.c51711db09774022c83d.webp",
+    "static/media/Amogus.webp": "/Software-Engineering-Project/static/media/Amogus.afc4d1e5368f4d9dba7b.webp",
+    "index.html": "/Software-Engineering-Project/index.html",
+    "static/media/footer(2).svg": "/Software-Engineering-Project/static/media/footer(2).fbf2bf8798f526bb2255892a581b427a.svg",
+    "main.74601abd.css.map": "/Software-Engineering-Project/static/css/main.74601abd.css.map",
+    "main.1e44b0db.js.map": "/Software-Engineering-Project/static/js/main.1e44b0db.js.map",
+    "488.431a4c48.chunk.js.map": "/Software-Engineering-Project/static/js/488.431a4c48.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.74601abd.css",
+    "static/js/main.1e44b0db.js"
+  ]
+}
