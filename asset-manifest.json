@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Software-Engineering-Project/static/css/main.95498737.css",
-    "main.js": "/Software-Engineering-Project/static/js/main.6b50d974.js",
+    "main.js": "/Software-Engineering-Project/static/js/main.e1c24483.js",
     "static/js/488.431a4c48.chunk.js": "/Software-Engineering-Project/static/js/488.431a4c48.chunk.js",
     "static/media/login-image.png": "/Software-Engineering-Project/static/media/login-image.3872e6b3a64f04a84e88.png",
     "static/media/onepiececlub.png": "/Software-Engineering-Project/static/media/onepiececlub.4e75846799d60545672f.png",
@@ -19,11 +19,11 @@
     "index.html": "/Software-Engineering-Project/index.html",
     "static/media/footer(2).svg": "/Software-Engineering-Project/static/media/footer(2).fbf2bf8798f526bb2255892a581b427a.svg",
     "main.95498737.css.map": "/Software-Engineering-Project/static/css/main.95498737.css.map",
-    "main.6b50d974.js.map": "/Software-Engineering-Project/static/js/main.6b50d974.js.map",
+    "main.e1c24483.js.map": "/Software-Engineering-Project/static/js/main.e1c24483.js.map",
     "488.431a4c48.chunk.js.map": "/Software-Engineering-Project/static/js/488.431a4c48.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.95498737.css",
-    "static/js/main.6b50d974.js"
+    "static/js/main.e1c24483.js"
   ]
 }
