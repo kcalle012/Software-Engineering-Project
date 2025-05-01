@@ -1,4 +1,5 @@
 {
+  "homepage": "https://kcalle012.github.io/Software-Engineering-Project",
   "name": "software-engineering-project",
   "version": "0.1.0",
   "private": true,
@@ -6,6 +7,7 @@
     "axios": "^1.8.3",
     "cra-template": "1.2.0",
     "firebase": "^11.6.1",
+    "gh-pages": "^6.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.2.0",
@@ -14,6 +16,8 @@
     "web-vitals": "^4.2.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
