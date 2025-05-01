@@ -10,11 +10,11 @@ import Confirmation from "./Components/Confirmation/Confirmation";
 import ForgotPassword from "./Components/ForgotPassword";
 import ChangePassword from "./Components/ChangePassword";
 
-import db, { auth } from "./FirebaseConfig";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+// import { onAuthStateChanged } from "firebase/auth";
+// import db, { auth } from "./FirebaseConfig";
+// import { collection, addDoc, getDocs } from "firebase/firestore";
 
 import EventDetails from "./Components/EventDetails/EventDetails";
 import CreateEvent from "./Components/CreateEvent/CreateEvent";
@@ -181,57 +181,57 @@ function App() {
     },
   ]);
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "events"));
-        const fetchedEvents = querySnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
+  // useEffect(() => {
+  //   const fetchEvents = async () => {
+  //     try {
+  //       const querySnapshot = await getDocs(collection(db, "events"));
+  //       const fetchedEvents = querySnapshot.docs.map((doc) => ({
+  //         ...doc.data(),
+  //         id: doc.id,
+  //       }));
 
-        // Prevent duplicate IDs (if you reuse IDs between local & Firestore)
-        setEvents((prevEvents) => {
-          const firestoreIds = new Set(fetchedEvents.map((ev) => ev.id));
-          const filteredLocal = prevEvents.filter(
-            (ev) => !firestoreIds.has(ev.id)
-          );
-          return [...filteredLocal, ...fetchedEvents];
-        });
-      } catch (error) {
-        console.error("Error fetching events:", error);
-      }
-    };
+  //       // Prevent duplicate IDs (if you reuse IDs between local & Firestore)
+  //       setEvents((prevEvents) => {
+  //         const firestoreIds = new Set(fetchedEvents.map((ev) => ev.id));
+  //         const filteredLocal = prevEvents.filter(
+  //           (ev) => !firestoreIds.has(ev.id)
+  //         );
+  //         return [...filteredLocal, ...fetchedEvents];
+  //       });
+  //     } catch (error) {
+  //       console.error("Error fetching events:", error);
+  //     }
+  //   };
 
-    fetchEvents();
-  }, []);
+  //   fetchEvents();
+  // }, []);
 
   const addEvent = async (newEvent) => {
     try {
-      const eventRef = await addDoc(collection(db, "events"), newEvent);
-      const eventWithId = { ...newEvent, id: eventRef.id };
+      // const eventRef = await addDoc(collection(db, "events"), newEvent);
+      // const eventWithId = { ...newEvent, id: eventRef.id };
 
-      setEvents((prevEvents) => [...prevEvents, eventWithId]);
+      setEvents((prevEvents) => [...prevEvents, newEvent]);
     } catch (error) {
       console.error("Error adding event:", error);
     }
   };
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        if (location.pathname === "/signup" || location.pathname === "/login") {
-          navigate("/Dashboard");
-        }
-      } else {
-        if (location.pathname !== "/signup" && location.pathname !== "/") {
-          navigate("/login");
-        }
-      }
-    });
+  // useEffect(() => {
+    // const unsubscribe = onAuthStateChanged(auth, (user) => {
+    //   if (user) {
+    //     if (location.pathname === "/signup" || location.pathname === "/login") {
+    //       navigate("/Dashboard");
+    //     }
+    //   } else {
+    //     if (location.pathname !== "/signup" && location.pathname !== "/") {
+    //       navigate("/login");
+    //     }
+    //   }
+    // });
 
-    return () => unsubscribe(); // Cleanup on unmount
-  }, [navigate, location.pathname]);
+  //   return () => unsubscribe(); // Cleanup on unmount
+  // }, [navigate, location.pathname]);
 
   return (
     <div className="App">

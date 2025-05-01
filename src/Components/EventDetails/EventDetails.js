@@ -1,9 +1,6 @@
-import { setDoc } from "firebase/firestore";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import "./EventDetails.scss";
-import db, { auth } from "../../FirebaseConfig";
-import { doc } from "firebase/firestore";
 
 const EventDetails = () => {
   const { state } = useLocation();
@@ -23,32 +20,9 @@ const EventDetails = () => {
     "free-stuff": "Free stuff",
   };
 
-  const handleRegister = async () => {
-    const userId = auth.currentUser.uid; // Get the current user's ID
-    const { title, time, location, image, description, organization, tags } =
-      state.event;
-
-    // Reference to the user's registrations subcollection
-    const registrationRef = doc(db, "users", userId, "registrations", title);
-
-    // Create the event object to save under the user's registrations subcollection
-    const eventToRegister = {
-      title,
-      time,
-      location,
-      image,
-      description,
-      organization,
-      tags,
-    };
-
-    try {
-      // Save the event to Firestore under the user's registrations subcollection
-      await setDoc(registrationRef, eventToRegister);
-      alert("Registered for the event successfully!");
-    } catch (error) {
-      alert(error.message);
-    }
+  const handleRegister = () => {
+    // For demo purposes, we simulate registration with an alert
+    alert("Registered for the event successfully!");
   };
 
   return (

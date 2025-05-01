@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 import messenger from "../../Assets/Images/groupchart.png";
 import add_event from "../../Assets/Images/AddEvent.png";
 import logo from "../../Assets/Images/logo.png";
-import db,{ auth, storage } from "../../FirebaseConfig";
-import { signOut } from "firebase/auth";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import {doc, setDoc, getDoc} from "firebase/firestore"
+// import db,{ auth, storage } from "../../FirebaseConfig";
+// import { signOut } from "firebase/auth";
+// import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+// import {doc, setDoc, getDoc} from "firebase/firestore"
 
 const Header = () => {
   const navigate = useNavigate();
   const [profilePic, setProfilePic] = useState(null);
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState("mockuser@example.com"); // Mock email for testing
   const [showChangeBox, setShowChangeBox] = useState(false);
   const [isScrolledDown, setIsScrolledDown] = useState(false);
   const fileInputRef = useRef(null);
@@ -29,21 +29,15 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Mock user authentication and profile data
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (userDoc.exists()) {
-          const data = userDoc.data();
-          if (data.profilePic) {
-            setProfilePic(data.profilePic);
-          }
-        }
-        setUserEmail(user.email);
-      }
-    });
-
-    return () => unsubscribe();
+    const mockUser = { uid: "mockuser123", email: "mockuser@example.com" }; // Mock user data
+    if (mockUser) {
+      // Simulate fetching user profile picture
+      const mockProfilePic = "https://example.com/mock-profile-pic.jpg"; // Mock profile picture URL
+      setProfilePic(mockProfilePic);
+      setUserEmail(mockUser.email);
+    }
   }, []);
 
   useEffect(() => {
@@ -71,25 +65,10 @@ const Header = () => {
 
   const handleProfilePicChange = async (event) => {
     const file = event.target.files[0];
-    if (!file || !auth.currentUser) return;
+    if (!file) return;
 
-    const userId = auth.currentUser.uid;
-    const storageRef = ref(storage, `profilePictures/${userId}`);
-
-    try {
-      await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(storageRef);
-      setProfilePic(downloadURL); // show preview immediately
-
-      // optionally store in Firestore or update user profile
-      await setDoc(
-        doc(db, "users", userId),
-        { profilePic: downloadURL },
-        { merge: true }
-      );
-    } catch (error) {
-      console.error("Error uploading profile picture:", error);
-    }
+    const mockProfilePic = URL.createObjectURL(file); // Simulate uploading and previewing image
+    setProfilePic(mockProfilePic);
   };
 
   const handleProfilePicClick = () => {
@@ -102,16 +81,11 @@ const Header = () => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth); 
-      localStorage.removeItem("user"); 
-      navigate("/"); 
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUserEmail(""); // Clear the user email upon logout
+    navigate("/"); // Redirect to the home page after logging out
   };
-  
 
   const handleLogoClick = () => navigate("/dashboard");
   const handleTitleClick = () => navigate("/dashboard");
@@ -172,7 +146,10 @@ const Header = () => {
 
         {showChangeBox && (
           <div className="change-profile-box" ref={changeBoxRef}>
-            <button onClick={() => navigate("/profile")} className="profile-btn">
+            <button
+              onClick={() => navigate("/profile")}
+              className="profile-btn"
+            >
               View Profile
             </button>
             <button onClick={handleButtonClick} className="change-profile-btn">

@@ -11,6 +11,5 @@ Our brand colors are #ff79df (pink), #ffaf4f (orange), #fff74f (yellow)
 
 # Back-End
 
-We used Flask to set up the backend and SQLAlechmy to set up and query to 
-the database. We also are using a SQLite Database
+We used Firebase for the backend and have removed its functionality for demo purposes.
 

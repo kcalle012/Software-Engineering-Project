@@ -1,21 +1,21 @@
-import {
-  collection,
-  serverTimestamp,
-  addDoc,
-  onSnapshot,
-  where,
-  query,
-  orderBy,
-  getDoc,
-  doc,
-} from "firebase/firestore";
+// import {
+//   collection,
+//   serverTimestamp,
+//   addDoc,
+//   onSnapshot,
+//   where,
+//   query,
+//   orderBy,
+//   getDoc,
+//   doc,
+// } from "firebase/firestore";
+// import db, { auth } from "../../FirebaseConfig";
 import { useEffect, useRef, useState } from "react";
-import db, { auth } from "../../FirebaseConfig";
 import "./index.scss";
 
 const Chat = () => {
   const [message, setMessage] = useState("");
-  const messageRef = collection(db, "messages");
+  // const messageRef = collection(db, "messages");
   const [messages, setMessages] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState("One Piece Club");
   const messagesEndRef = useRef(null);
@@ -30,40 +30,54 @@ const Chat = () => {
     });
   }, [messages]);
 
-  useEffect(() => {
-    const queryMessages = query(
-      messageRef,
-      where("room", "==", selectedRoom),
-      orderBy("createdAt")
-    );
-    const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
-      let messages = [];
-      snapshot.forEach((doc) => {
-        messages.push({ ...doc.data(), id: doc.id });
-      });
-      setMessages(messages);
-    });
+  // Commented out Firebase listener
+  // useEffect(() => {
+  //   const queryMessages = query(
+  //     messageRef,
+  //     where("room", "==", selectedRoom),
+  //     orderBy("createdAt")
+  //   );
+  //   const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
+  //     let messages = [];
+  //     snapshot.forEach((doc) => {
+  //       messages.push({ ...doc.data(), id: doc.id });
+  //     });
+  //     setMessages(messages);
+  //   });
 
-    return () => unsubscribe();
-  }, [selectedRoom]);
+  //   return () => unsubscribe();
+  // }, [selectedRoom]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (message.trim() === "") return;
 
-    const user = auth.currentUser;
-    const userDoc = await getDoc(doc(db, "users", user.uid));
-    const profilePic = userDoc.exists() ? userDoc.data().profilePic : null;
-
-    await addDoc(messageRef, {
+    // Demo version: simulate adding message locally
+    const newMessage = {
+      id: Date.now(),
       text: message,
-      createdAt: serverTimestamp(),
-      createdBy: user.email,
-      photoURL: profilePic || "/default-avatar.png",
+      createdBy: "demo@user.com",
+      photoURL: "/default-avatar.png",
       room: selectedRoom,
-    });
+    };
 
+    setMessages((prev) => [...prev, newMessage]);
     setMessage("");
+
+    // Firebase version:
+    // const user = auth.currentUser;
+    // const userDoc = await getDoc(doc(db, "users", user.uid));
+    // const profilePic = userDoc.exists() ? userDoc.data().profilePic : null;
+
+    // await addDoc(messageRef, {
+    //   text: message,
+    //   createdAt: serverTimestamp(),
+    //   createdBy: user.email,
+    //   photoURL: profilePic || "/default-avatar.png",
+    //   room: selectedRoom,
+    // });
+
+    // setMessage("");
   };
 
   return (
@@ -95,7 +109,7 @@ const Chat = () => {
 
         <div ref={messagesContainerRef} className="messages">
           {messages.map((msg) => {
-            const isMe = msg.createdBy === auth.currentUser.email;
+            const isMe = msg.createdBy === "demo@user.com"; // Simplified for demo
             return (
               <div
                 key={msg.id}

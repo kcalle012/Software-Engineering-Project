@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.scss";
 import Image from "../../Assets/Images/login-image.png";
-import { auth } from "../../FirebaseConfig";
-import {
-  sendPasswordResetEmail
-} from "firebase/auth";
+// import { auth } from "../../FirebaseConfig";
+// import { sendPasswordResetEmail } from "firebase/auth";
 
 import logo from "../../Assets/Images/logo.png";
 
@@ -15,32 +13,33 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [disable, setDisable] = useState(false);
 
-
   const validateForm = () => {
-
     // Check if fields are empty
     if (!email.trim()) {
-      alert("Email is required")
+      alert("Email is required");
     } else {
       // Simple email format check
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        alert("Please enter a valid email")
+        alert("Please enter a valid email");
       }
     }
-
   };
 
+  const handleSubmit = async (email) => {
+    // Firebase code commented out
+    // try {
+    //     await sendPasswordResetEmail(auth, email);
+    //     alert("Password reset email sent!");
+    //     window.location.href = "/login";
+    // } catch (error) {
+    //     alert(error.message);
+    // }
 
-  const handleSubmit = async(email) => {
-    try {
-        await sendPasswordResetEmail(auth, email)
-        alert("Password reset email sent!")
-        window.location.href = "/login"
-    } catch (error) {
-        alert(error.message)
-    }
-  }
+    // Simulate password reset (since Firebase logic is commented out)
+    alert("Password reset email simulated for: " + email);
+    window.location.href = "/login";
+  };
 
   return (
     <div className="login">
@@ -60,7 +59,6 @@ const ForgotPassword = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-   
         <button
           className={disable ? `submit disabled` : `submit`}
           onClick={() => handleSubmit(email)}

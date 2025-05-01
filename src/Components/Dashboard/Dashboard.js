@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import EventCard from "../Events/EventCard";
 import "./Dashboard.scss";
-import { auth } from "../../FirebaseConfig";
+// import { auth } from "../../FirebaseConfig";
 
 const Dashboard = ({ events }) => {
     const navigate = useNavigate();

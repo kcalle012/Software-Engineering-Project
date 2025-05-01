@@ -12,6 +12,8 @@ const ChangePassword = () => {
     if (newPassword === confirmPassword) {
       // Handle the password change logic
       console.log("Password Changed!");
+      alert("Password was changed! (simulated)")
+      window.location.href = "/profile"
     } else {
       alert("Passwords do not match!");
     }

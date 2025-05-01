@@ -1,87 +1,138 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.scss";
-import db, { auth } from "../../FirebaseConfig";
-import { signOut } from "firebase/auth";
+// import db, { auth } from "../../FirebaseConfig"; // Commenting out Firebase import
+// import { signOut } from "firebase/auth"; // Commenting out Firebase import
 import EventCard from "../Events/EventCard";
-import {
-  collection,
-  getDocs,
-  doc,
-  deleteDoc,
-  getDoc,
-} from "firebase/firestore";
+
+// Commenting out Firebase methods
+// import {
+//   collection,
+//   getDocs,
+//   doc,
+//   deleteDoc,
+//   getDoc,
+// } from "firebase/firestore";
+
+import eventImage1 from "../../Assets/Images/onepiececlub.png";
+import eventImage2 from "../../Assets/Images/MikuConcert2.png";
+import eventImage3 from "../../Assets/Images/sarahhh.webp";
+import eventImage4 from "../../Assets/Images/BobaTime.png";
+import eventImage5 from "../../Assets/Images/HostClub.webp";
+
+
+import onepiece_logo from "../../Assets/Images/onepiece_logo.png";
+import miku_logo from "../../Assets/Images/miku_logo.png";
+import pokemon_logo from "../../Assets/Images/pokemon_logo.png";
+import boba_logo from "../../Assets/Images/food_logo.png";
+import host_logo from "../../Assets/Images/host_logo.png";
+import "../../"
+
 
 const ProfilePage = () => {
   const navigate = useNavigate();
   const [profilePic, setProfilePic] = useState(null);
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState("demo@demo.com"); // Mock email for demo
   const fileInputRef = useRef(null);
-  const [registeredEvents, setRegisteredEvents] = useState([]);
+  const [registeredEvents, setRegisteredEvents] = useState([
+    // Mock events for demo
+    { id: "1", name: "Event 1", description: "Description for Event 1" },
+    { id: "2", name: "Event 2", description: "Description for Event 2" },
+  ]);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        setUserEmail(user.email);
-        const events = await getRegisteredEvents(user.uid);
-        setRegisteredEvents(events);
+    // Mock function to simulate user data fetching
+    const simulateUserData = () => {
+      setUserEmail("demo@demo.com");
+      // Fetch mock events
+      setRegisteredEvents([
+        {
+          id: 1,
+          title: "Ice Cream Social",
+          time: "Wednesday | March 5 | 12:45 pm",
+          location: "Student Center Ballrooms",
+          organization: "One Piece Club",
+          tags: ["free-food"],
+          date: "2025-03-05",
+          startTime: "12:45",
+          endTime: "14:00",
+          image: eventImage1,
+          groupIcon: onepiece_logo,
+          description: `
+    Ice Cream Social
+      Event Information
+      Ahoy, crew! ⚓
+      Set sail for a One Piece-themed ice cream adventure! Whether you're a Straw Hat Pirate or a Marine, come feast on delicious frozen treats worthy of a Grand Line voyage.
+      
+      What's in store? 🍨
+      • Devil Fruit-inspired ice cream flavors
+      • Pirate-themed toppings & treats
+      • One Piece trivia & games
+      • Wanted poster photo booth
+      • Sea shanties & anime OST vibes
+      
+      Dress as your favorite character (optional but fun!), bring your nakama, and get ready for a legendary time!
+      
+      Don’t be a landlubber—join the crew for an adventure of flavors! ⛵`,
+        },
+        {
+          id: 2,
+          title: "Miku Concert",
+          organization: "Miku Enthusiasts",
+          time: "Thursday | March 6 | 2:30 pm",
+          location: "Student Center 2C04 - 2nd Floor Lobby",
+          tags: [],
+          date: "2025-03-06",
+          image: eventImage2,
+          groupIcon: miku_logo,
+          description: "Come join the One Piece club for a high seas adventure",
+        },
+        {
+          id: 3,
+          title: "Pet a Pokémon",
+          time: "Thursday | March 6 | 7:00 pm",
+          location: "Student Center Room 417",
+          tags: ["free-stuff"],
+          date: "2025-03-06",
+          image: eventImage3,
+          groupIcon: pokemon_logo,
+          description: "Come join the One Piece club for a high seas adventure",
+        },
+        {
+          id: 4,
+          title: "Poppin' with Boba",
+          organization: "Korean Club",
+          time: "Friday | March 7 | 12:45 pm",
+          location: "Blanton Hall",
+          tags: ["free-food"],
+          date: "2025-03-07",
+          image: eventImage4,
+          groupIcon: boba_logo,
+          description: "Come join the One Piece club for a high seas adventure",
+        },
+        {
+          id: 5,
+          title: "Host Club Meeting",
+          time: "Monday | March 10 | 2:15 pm",
+          location: "Music Room 3",
+          tags: ["free-food"],
+          date: "2025-03-10",
+          image: eventImage5,
+          groupIcon: host_logo,
+          description: "Come join the One Piece club for a high seas adventure",
+        },
+      ]);
+    };
 
-        // 🔽 Fetch profilePic from Firestore
-        try {
-          const userDocRef = doc(db, "users", user.uid);
-          const userDocSnap = await getDoc(userDocRef);
-          if (userDocSnap.exists()) {
-            const data = userDocSnap.data();
-            if (data.profilePic) {
-              setProfilePic(data.profilePic);
-            }
-          }
-        } catch (error) {
-          console.error("Error fetching user profile pic:", error);
-        }
-      }
-    });
-
-    return () => unsubscribe();
+    simulateUserData();
   }, []);
 
   const handleEventClick = (event) => {
     navigate("/event-details", { state: { event } });
   };
 
-  const getRegisteredEvents = async (userId) => {
-    try {
-      const registrationsRef = collection(db, "users", userId, "registrations");
-      const querySnapshot = await getDocs(registrationsRef);
-
-      const registeredEvents = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      return registeredEvents;
-    } catch (error) {
-      console.error("Error fetching registered events:", error);
-      return [];
-    }
-  };
-
-  const removeRegisteredEvent = async (eventId) => {
-    const userId = auth.currentUser?.uid;
-    if (!userId) return;
-
-    try {
-      const eventRef = doc(db, "users", userId, "registrations", eventId);
-      await deleteDoc(eventRef);
-
-      setRegisteredEvents((prev) =>
-        prev.filter((event) => event.id !== eventId)
-      );
-
-      console.log("Event removed from registrations.");
-    } catch (error) {
-      console.error("Error removing event:", error);
-    }
+  const removeRegisteredEvent = (eventId) => {
+    setRegisteredEvents((prev) => prev.filter((event) => event.id !== eventId));
   };
 
   const handleProfilePicChange = (event) => {
@@ -90,12 +141,11 @@ const ProfilePage = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfilePic(reader.result);
-        // You may want to upload to Firebase Storage and save URL to Firestore here
+        // For demo, we are not uploading to Firebase
       };
       reader.readAsDataURL(file);
     }
   };
-
 
   const getFirstLetter = (email) => {
     return email ? email.split("@")[0].charAt(0).toUpperCase() : "";
@@ -114,14 +164,11 @@ const ProfilePage = () => {
     navigate("/change-password");
   };
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      localStorage.removeItem("user");
-      navigate("/");
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
+  const handleLogout = () => {
+    // For demo, we simulate a logout
+    console.log("Logging out...");
+    localStorage.removeItem("user");
+    navigate("/");
   };
 
   const defaultProfilePic = getFirstLetter(userEmail);
@@ -199,7 +246,7 @@ const ProfilePage = () => {
           ))}
         </div>
 
-        <button onClick={handleLogout} className="logout-btn">
+        <button onClick={handleLogout} className="logout-btn profile-logout">
           Log Out
         </button>
       </div>

@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.scss";
 import Image from "../../Assets/Images/login-image.png";
-import { auth } from "../../FirebaseConfig";
-import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+// import { auth } from "../../FirebaseConfig";
+// import { signInWithEmailAndPassword } from "firebase/auth";
 import Eye from "../../Assets/Images/eye-solid.png";
 import SlashEye from "../../Assets/Images/eye-slash-solid.png";
 import logo from "../../Assets/Images/logo.png";
-
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,7 +21,6 @@ const Login = () => {
     let formErrors = {};
 
     // Check if fields are empty
-
     if (!email.trim()) {
       formErrors.email = "Email is required";
     } else {
@@ -45,15 +43,20 @@ const Login = () => {
 
   const handleLogin = async () => {
     if (email !== "" && password !== "" && !error) {
-      try {
-        const user = await signInWithEmailAndPassword(auth, email, password);
-        if (user) {
-          navigate("/dashboard");
-        }
-      } catch (error) {
-        console.log(error);
-        alert("Invalid email or password!");
-      }
+      // Firebase code commented out
+      // try {
+      //   const user = await signInWithEmailAndPassword(auth, email, password);
+      //   if (user) {
+      //     navigate("/dashboard");
+      //   }
+      // } catch (error) {
+      //   console.log(error);
+      //   alert("Invalid email or password!");
+      // }
+
+      // Simulate successful login
+      alert("Login simulated for: " + email);
+      navigate("/dashboard");
     }
   };
 
@@ -61,7 +64,7 @@ const Login = () => {
     <div className="login">
       <img src={Image} alt="Two people watering a plant" className="image" />
       <div className="login-form">
-        <img src={logo} alt="Website Logo" className="logo"/>
+        <img src={logo} alt="Website Logo" className="logo" />
         <div className="welcome-message">
           <p>Welcome to</p>
           <h1>UVent</h1>
@@ -96,7 +99,12 @@ const Login = () => {
             <input type="checkbox" id="remember" name="remember" />
             Remember me
           </label>
-          <div className="forgot-password" onClick={() => { window.location.href = "/forgotpassword"} }>
+          <div
+            className="forgot-password"
+            onClick={() => {
+              window.location.href = "/forgotpassword";
+            }}
+          >
             <p>
               <a href="/forgotpassword">Forgot Password?</a>
             </p>

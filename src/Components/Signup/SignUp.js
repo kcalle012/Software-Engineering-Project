@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.scss";
 import Image from "../../Assets/Images/login-image.png";
-import { auth } from "../../FirebaseConfig";
-import db from "../../FirebaseConfig"
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
 import logo from "../../Assets/Images/logo.png";
+
+// import { auth } from "../../FirebaseConfig";
+// import db from "../../FirebaseConfig";
+// import { createUserWithEmailAndPassword } from "firebase/auth";
+// import { setDoc, doc } from "firebase/firestore";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -51,29 +52,42 @@ const SignUp = () => {
     e.preventDefault();
 
     if (!validateForm()) return;
-    if (email && password) {
-      try {
-        const userCredentials = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        const user = userCredentials.user;
-        
-        const userInfo = {
-          username: username,
-          email: email,
-          organizations: [],
-          roles: {},
-          photoUrl: "",
-        }
-        const userRef = await setDoc(doc(db, "users", user.uid), userInfo)
-        console.log(`${userRef} added successfully`)
 
-      } catch (e) {
-        alert(`Signup error: ${e.message}`);
-      }
-    }
+    // Firebase code commented out
+    // if (email && password) {
+    //   try {
+    //     const userCredentials = await createUserWithEmailAndPassword(
+    //       auth,
+    //       email,
+    //       password
+    //     );
+    //     const user = userCredentials.user;
+
+    //     const userInfo = {
+    //       username: username,
+    //       email: email,
+    //       organizations: [],
+    //       roles: {},
+    //       photoUrl: "",
+    //     };
+    //     const userRef = await setDoc(doc(db, "users", user.uid), userInfo);
+    //     console.log(`${userRef} added successfully`);
+
+    //   } catch (e) {
+    //     alert(`Signup error: ${e.message}`);
+    //   }
+    // }
+
+    // Simulate successful registration (as Firebase logic is commented out)
+    alert(
+      `User registered successfully!\nUsername: ${username}\nEmail: ${email}`
+    );
+
+    // Clear the form
+    setUsername("");
+    setEmail("");
+    setPassword("");
+    setRetypePassword("");
   };
 
   return (
@@ -83,7 +97,7 @@ const SignUp = () => {
       </div>
 
       <form className="signup-form" onSubmit={handleSignUp}>
-        <img src={logo} alt="Website Logo" className="logo"/>
+        <img src={logo} alt="Website Logo" className="logo" />
         <div className="welcome-message">
           <p>Sign up for a</p>
           <h1>UVent</h1>
