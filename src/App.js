@@ -237,7 +237,7 @@ function App() {
     <div className="App">
       {!hideHeaderRoutes.includes(location.pathname) && <Header />}
       <Routes>
-        <Route index element={<Landing />} />
+        <Route index element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route
